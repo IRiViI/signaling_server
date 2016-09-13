@@ -1,25 +1,25 @@
 {
-  "name": "signaling_server",
+  "name": "test_ws_heroku",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "start": "node server.js"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/IRiViI/signaling_server.git"
-  },
   "engines": {
     "node": "6.2.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/IRiViI/test_ws_heroku.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/IRiViI/signaling_server/issues"
+    "url": "https://github.com/IRiViI/test_ws_heroku/issues"
   },
-  "homepage": "https://github.com/IRiViI/signaling_server#readme",
+  "homepage": "https://github.com/IRiViI/test_ws_heroku#readme",
   "dependencies": {
     "express": "4.14.0"
   }

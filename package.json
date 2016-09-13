@@ -1,0 +1,26 @@
+{
+  "name": "signaling_server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/IRiViI/signaling_server.git"
+  },
+  "engines": {
+    "node": "6.2.0"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/IRiViI/signaling_server/issues"
+  },
+  "homepage": "https://github.com/IRiViI/signaling_server#readme",
+  "dependencies": {
+    "express": "4.14.0"
+  }
+}

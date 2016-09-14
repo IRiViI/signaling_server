@@ -92,7 +92,8 @@ startWebRTC = function(){
         pc.iceconnectionstate === "disconnected" ||
         pc.iceconnectionstate === "closed") {
       console.log(event);
-  };
+    };
+  }
 
   function getUserMediaSuccess(stream){
     localVideo.srcObject = stream;

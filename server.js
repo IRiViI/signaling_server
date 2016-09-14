@@ -9,11 +9,11 @@ const INDEX = path.join(__dirname, 'index.html');
 
  const server = express()
 	.use(express.static(__dirname + '/js'))
-  	.use((req, res) => res.sendFile(INDEX) )
-  	.listen(PORT, () => console.log(`Listening on ${ PORT }`));
+  .use((req, res) => res.sendFile(INDEX) )
+  .listen(PORT, () => console.log(`Listening on ${ PORT }`));
 
+const wss = new SocketServer({ server });
 
-var room_list = [];
  /*
 
  const server = express();
@@ -27,7 +27,8 @@ const server = express()
 
   	*/
 
-const wss = new SocketServer({ server });
+
+var room_list = [];
 
 wss.on('connection', (ws) => {
   console.log('Client connected');
@@ -39,7 +40,6 @@ wss.on('connection', (ws) => {
     onMessage(ws,message);
   });
 });
-
 
 function onMessage(ws,message){
   // Get data
@@ -57,7 +57,6 @@ function onMessage(ws,message){
     // Check if the conent of the message is correct
     var isCorrectData = checkData(data);
     // If the message met the criteria
-    console.log(data);
     if (isCorrectFromClient && 
       isCorrectToClient &&
       isCorrectData){
@@ -74,6 +73,7 @@ function checkData(data){
     data.candidate != null){
     return true;
   } else {
+    console.log(data);
     console.log("WARNING: checkData, content of message is invalid");
     return false;
   }

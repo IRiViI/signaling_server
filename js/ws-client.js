@@ -16,7 +16,7 @@ function createWS(room_id,client_id,
   ws.onopen = function(){
     var message = JSON.stringify({settings: SETTINGS});
     ws.send(message);
-    onOpenCallback;
+    onOpenCallback();
   };
 
   ws.onerror = function(error) {

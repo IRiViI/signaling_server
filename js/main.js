@@ -86,6 +86,13 @@ startWebRTC = function(){
       ws.sendMessage({candidate:event.candidate},to_client_id_text.value);
     };
   }
+  pc.oniceconnectionstatechange = function(event) {
+    console.log(event);
+    if (pc.iceconnectionstate === "failed" ||
+        pc.iceconnectionstate === "disconnected" ||
+        pc.iceconnectionstate === "closed") {
+      console.log(event);
+  };
 
   function getUserMediaSuccess(stream){
     localVideo.srcObject = stream;

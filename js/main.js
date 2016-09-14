@@ -98,8 +98,7 @@ startWebRTC = function(){
     }
     pc.onaddstream = gotRemoteStream;
   }
-  window.navigator.getUserMedia(configuration)
-  .then(getUserMediaSuccess);
+  window.navigator.getUserMedia(configuration,getUserMediaSuccess,function(error){console.log("error")});
 }
 
 sendWebRTCRequest = function(){

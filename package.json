@@ -21,7 +21,7 @@
   "homepage": "https://github.com/IRiViI/signaling_server#readme",
   "dependencies": {
     "express": "4.14.0",
-    "webrtc-adapter":"1.0.5"
+    "webrtc-adapter":"2.0.3"
   },
   "devDependencies": {},
   "description": ""

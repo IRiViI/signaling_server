@@ -116,7 +116,10 @@ processRequestDescription = function(requestDescription){
     ws.sendMessage({answerDescription:answerDescription},to_client_id_text.value);
     pc.setLocalDescription(answerDescription);
   }
-  pc.createAnswer().then(anwerSuccesful);
+  function answerFailure(error){
+    console.log(error);
+  }
+  pc.createAnswer(anwerSuccesful,answerFailure)
   console.log(requestDescription);
 }
 

@@ -80,7 +80,7 @@ var offerOptions = {
 };
 
 startWebRTC = function(){
-  window.pc = pc = new RTCPeerConnection(servers);
+  window.pc = pc = new window.RTCPeerConnection(servers);
   pc.onicecandidate = function(event){
     if (event.candidate != null){
       ws.sendMessage({candidate:event.candidate},to_client_id_text.value);

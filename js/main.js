@@ -87,11 +87,12 @@ startWebRTC = function(){
     };
   }
   pc.oniceconnectionstatechange = function(event) {
-    console.log(event);
+    console.log(event.srcElement);
+    console.log(event.target);
     if (pc.iceconnectionstate === "failed" ||
         pc.iceconnectionstate === "disconnected" ||
         pc.iceconnectionstate === "closed") {
-      console.log(event);
+      //console.log(event);
     };
   }
 

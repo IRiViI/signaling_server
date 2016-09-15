@@ -93,27 +93,34 @@ $(document).ready(function() {
 
 var servers = { 
   "iceServers": [
-    {"url":"stun:turn01.uswest.xirsys.com"},
+    {url:"stun:turn01.uswest.xirsys.com"},
     {
-      "username":"12756aa0-7b32-11e6-b7c5-86b8896063c3",
-      "url":"turn:turn01.uswest.xirsys.com:443?transport=udp",
-      "credential":"12756b36-7b32-11e6-b6d3-4d239dc95dce"
+      username:"12756aa0-7b32-11e6-b7c5-86b8896063c3",
+      url:"turn:turn01.uswest.xirsys.com:443?transport=udp",
+      credential:"12756b36-7b32-11e6-b6d3-4d239dc95dce"
     },
     {
-      "username":"12756aa0-7b32-11e6-b7c5-86b8896063c3",
-      "url":"turn:turn01.uswest.xirsys.com:443?transport=tcp",
-      "credential":"12756b36-7b32-11e6-b6d3-4d239dc95dce"
+      username:"12756aa0-7b32-11e6-b7c5-86b8896063c3",
+      url:"turn:turn01.uswest.xirsys.com:443?transport=tcp",
+      credential:"12756b36-7b32-11e6-b6d3-4d239dc95dce"
     },
     {
-      "username":"12756aa0-7b32-11e6-b7c5-86b8896063c3",
-      "url":"turn:turn01.uswest.xirsys.com:5349?transport=udp",
-      "credential":"12756b36-7b32-11e6-b6d3-4d239dc95dce"
+      username:"12756aa0-7b32-11e6-b7c5-86b8896063c3",
+      url:"turn:turn01.uswest.xirsys.com:5349?transport=udp",
+      credential:"12756b36-7b32-11e6-b6d3-4d239dc95dce"
     },
     {
-      "username":"12756aa0-7b32-11e6-b7c5-86b8896063c3",
-      "url":"turn:turn01.uswest.xirsys.com:5349?transport=tcp",
-      "credential":"12756b36-7b32-11e6-b6d3-4d239dc95dce"
+      username:"12756aa0-7b32-11e6-b7c5-86b8896063c3",
+      url:"turn:turn01.uswest.xirsys.com:5349?transport=tcp",
+      credential:"12756b36-7b32-11e6-b6d3-4d239dc95dce"
+    },
+    {url:'stun:stun.l.google.com:19302'},
+    {
+      url:'turn:numb.viagenie.ca', 
+      username:"rckvink@gmail.com", 
+      credential:"[80S37b98^+7N<e"
     }
+
   ] 
 };
 

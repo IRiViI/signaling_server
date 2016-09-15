@@ -84,42 +84,70 @@ startWebRTC = function(){
   pc.onicecandidate = function(event){
     if (event.candidate != null){
       ws.sendMessage({candidate:event.candidate},to_client_id_text.value);
+      console.log("onicecandidate");
     };
   }
   pc.oniceconnectionstatechange = function(event) {
-    console.dir(event);
+    // console.dir(event);
     if (pc.iceconnectionstate === "failed" ||
         pc.iceconnectionstate === "disconnected" ||
         pc.iceconnectionstate === "closed") {
       //console.log(event);
     };
+    console.log("oniceconnectionstatechange");
   }
 
   function getUserMediaSuccess(stream){
     localVideo.srcObject = stream;
     window.localStream = localStream = stream;
     pc.addStream(localStream);
-
     function gotRemoteStream(event){
       window.remoteStream = remoteVideo.srcObject = event.stream;
-      console.log("Got remote stream");
+      console.log("gotRemoteStream");
     }
     pc.onaddstream = gotRemoteStream;
   }
-  window.navigator.getUserMedia(configuration,getUserMediaSuccess,function(error){console.log("error")});
+  function getUserMediaFailure(error){
+    console.log("getUserMediaFail:");
+    console.log(error);
+  }
+  window.navigator.getUserMedia(
+    configuration,
+    getUserMediaSuccess,
+    getUserMediaFailure);
 }
 
 sendWebRTCRequest = function(){
   function offerSuccesful(desc){
     ws.sendMessage({requestDescription:desc},to_client_id_text.value);
     pc.setLocalDescription(desc);
+    console.log("offerSuccesful");
   }
-  console.log(pc);
-  pc.createOffer(offerOptions).then(offerSuccesful);
+  function offerFailure(error){
+    console.log("offerFailure:");
+    console.log(error);
+  }
+  pc.createOffer(
+    offerSuccesful,
+    fferFailure,
+    offerOptions);
+  console.log("sendWebRTCRequest");
 }
 
 processRequestDescription = function(requestDescription){
-  pc.setRemoteDescription(requestDescription);
+  function onSetRemoteSuccesful(event){
+    console.log("onSetRemoteSuccesful");
+    console.log(event);
+  }
+  function onSetRemoteFailure(event){
+    console.log("onSetRemoteFailure");
+    console.log(error);
+  }
+  pc.setRemoteDescription(
+    requestDescription,
+    onSetRemoteSuccesful,
+    onSetRemoteFailure);
+
   function anwerSuccesful(answerDescription){
     ws.sendMessage({answerDescription:answerDescription},to_client_id_text.value);
     pc.setLocalDescription(answerDescription);
@@ -132,13 +160,36 @@ processRequestDescription = function(requestDescription){
 }
 
 processAnswerDescription = function(answerDescription){
-  pc.setRemoteDescription(answerDescription);
+  function onSetRemoteSuccesful(event){
+    console.log("onSetRemoteSuccesful");
+    console.log(event);
+  }
+  function onSetRemoteFailure(error){
+    console.log("onSetRemoteFailure");
+    console.log(error);
+  }
+  pc.setRemoteDescription(
+    answerDescription,
+    onSetRemoteSuccesful,
+    onSetRemoteFailure);
   console.log(answerDescription);
 }
 
 
 processReceiveCandidate = function(candidate){
-  pc.addIceCandidate(new RTCIceCandidate(candidate));
+  function onIceSuccesful(event){
+    console.log("onIceSuccesful");
+    console.log(event);
+  }
+  function onIceFailure(error){
+    console.log("onIceFailure");
+    console.log(error);
+  }
+  pc.addIceCandidate(
+    new RTCIceCandidate(candidate),
+    onIceSuccesful,
+    onIceFailure);
+  console.log("addIceCandidate");
   console.log(candidate);
 }
 

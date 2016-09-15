@@ -36,22 +36,22 @@ startSignalingServer = function(){
 }
 
 onReceiveRequestDescription = function (requestDescription){
-  console.log("rDesc");
+  //console.log("rDesc");
   processRequestDescription(requestDescription);
 }
 
 onReceiveAnswerDescription = function (answerDescription){
-  console.log("aDesc");
+  //console.log("aDesc");
   processAnswerDescription(answerDescription);
 }
 
 onReceiveCandidate = function (candidate){
-  console.log("can");
+  //console.log("can");
   processReceiveCandidate(candidate);
 }
 
 onOpenWs = function(){
-  console.log("ws");
+  //console.log("ws");
   startWebRTC();
 }
 
@@ -63,15 +63,7 @@ var localVideo = document.getElementById('localVideo');
 var remoteVideo = document.getElementById('remoteVideo');
 
 var xirsys_data;
-/*
-var servers = { 
-  "iceServers": [
-    {url:'stun:stun.l.google.com:19302'},
-    {url:'turn:numb.viagenie.ca', username:"rckvink@gmail.com", credential:"[80S37b98^+7N<e"}
-  ] 
-};
-*/
-/*
+
 $(document).ready(function() {
   $.get("https://service.xirsys.com/ice",
       {
@@ -84,28 +76,9 @@ $(document).ready(function() {
       },
       function(data, status) {
           alert("Data: " + data + "nnStatus: " + status);
-          console.log(data);
-          console.log(status);
-          console.log("Data: " + data + "nnStatus: " + status);
-      }
-      );
-  });
-*/
-$(document).ready(function() {
-  $.get("https://service.xirsys.com/ice",
-      {
-          ident: "something",
-          secret: "61986108-7b2f-11e6-b4ee-28ee1984c12b",
-          domain: "peaceful-journey-94586.herokuapp.com",
-          application: "tadtest",
-          room: "default",
-          secure: 1
-      },
-      function(data, status) {
-          alert("Data: " + data + "nnStatus: " + status);
-          console.log(data);
-          console.log(status);
-          console.log("Data: " + data + "nnStatus: " + status);
+          //console.log(data);
+          //console.log(status);
+          //console.log("Data: " + data + "nnStatus: " + status);
 
           xirsys_data = data;
       }
@@ -158,7 +131,7 @@ var servers = {
 
   ] 
 };
-console.log(servers);
+//console.log(servers);
 
   window.pc = pc = new window.RTCPeerConnection(servers);
   pc.onicecandidate = function(event){
@@ -168,7 +141,7 @@ console.log(servers);
         return;
       }
       ws.sendMessage({candidate:event.candidate},to_client_id_text.value);
-      console.log("onicecandidate");
+      //console.log("onicecandidate");
     };
   }
   pc.oniceconnectionstatechange = function(event) {
@@ -178,7 +151,7 @@ console.log(servers);
         pc.iceconnectionstate === "closed") {
       //console.log(event);
     };
-    console.log("oniceconnectionstatechange");
+    //console.log("oniceconnectionstatechange");
   }
 
   function getUserMediaSuccess(stream){
@@ -187,13 +160,13 @@ console.log(servers);
     pc.addStream(localStream);
     function gotRemoteStream(event){
       window.remoteStream = remoteVideo.srcObject = event.stream;
-      console.log("gotRemoteStream");
+      //console.log("gotRemoteStream");
     }
     pc.onaddstream = gotRemoteStream;
   }
   function getUserMediaFailure(error){
-    console.log("getUserMediaFail:");
-    console.log(error);
+    //console.log("getUserMediaFail:");
+    //console.log(error);
   }
   window.navigator.getUserMedia(
     configuration,
@@ -207,24 +180,24 @@ sendWebRTCRequest = function(){
     pc.setLocalDescription(desc,
         setLocalSuccesful,
         setLocalFailure);
-    console.log("offerSuccesful");
+    //console.log("offerSuccesful");
   }
   function offerFailure(error){
-    console.log("offerFailure:");
-    console.log(error);
+    //console.log("offerFailure:");
+    //console.log(error);
   }
   pc.createOffer(
     offerSuccesful,
     offerFailure,
     offerOptions);
-  console.log("sendWebRTCRequest");
+  //console.log("sendWebRTCRequest");
 }
 
 processRequestDescription = function(requestDescription){
   function onSetRemoteSuccesful(event){
     continueRequest();
   }
-  console.log(requestDescription);
+  //console.log(requestDescription);
   pc.setRemoteDescription(
     requestDescription,
     onSetRemoteSuccesful,
@@ -232,7 +205,7 @@ processRequestDescription = function(requestDescription){
 
   continueRequest = function (){
     function anwerSuccesful(answerDescription){
-      console.log("anwerSuccesful");
+      //console.log("anwerSuccesful");
       ws.sendMessage({answerDescription:answerDescription},to_client_id_text.value);
       pc.setLocalDescription(
         answerDescription,
@@ -240,56 +213,56 @@ processRequestDescription = function(requestDescription){
         setLocalFailure);
     }
     function answerFailure(error){
-      console.log("answerFailure");
-      console.log(error);
+      //console.log("answerFailure");
+      //console.log(error);
     }
     pc.createAnswer(anwerSuccesful,answerFailure)
-    console.log(requestDescription);
+    //console.log(requestDescription);
   }
 }
 
 processAnswerDescription = function(answerDescription){
   function onSetRemoteSuccesful(event){
-    console.log("onSetRemoteSuccesful");
-    console.log(event);
+    //console.log("onSetRemoteSuccesful");
+    //console.log(event);
   }
   pc.setRemoteDescription(
     answerDescription,
     onSetRemoteSuccesful,
     onSetRemoteFailure);
-  console.log(answerDescription);
+  //console.log(answerDescription);
 }
 
 
 processReceiveCandidate = function(candidate){
   function onIceSuccesful(event){
-    console.log("onIceSuccesful");
-    console.log(event);
+    //console.log("onIceSuccesful");
+    //console.log(event);
   }
   function onIceFailure(error){
-    console.log("onIceFailure");
-    console.log(error);
+    //console.log("onIceFailure");
+    //console.log(error);
   }
   pc.addIceCandidate(
     candidate,
     onIceSuccesful,
     onIceFailure);
-  console.log("addIceCandidate");
-  console.log(candidate);
+  //console.log("addIceCandidate");
+  //console.log(candidate);
 }
 
 
 function setLocalSuccesful(event){
-  console.log("setLocalSuccesful:");
-  console.log(event);
+  //console.log("setLocalSuccesful:");
+  //console.log(event);
 }
 function setLocalFailure(error){
-  console.log("setLocalFailure:");
-  consoel.log(error);
+  //console.log("setLocalFailure:");
+  //consoel.log(error);
 }
 function onSetRemoteFailure(error){
-  console.log("onSetRemoteFailure");
-  console.log(error);
+  //console.log("onSetRemoteFailure");
+  //console.log(error);
 }
 
 /*
@@ -315,3 +288,33 @@ function onSetRemoteFailure(error){
   };
 
   */
+
+
+/*
+var servers = { 
+  "iceServers": [
+    {url:'stun:stun.l.google.com:19302'},
+    {url:'turn:numb.viagenie.ca', username:"rckvink@gmail.com", credential:"[80S37b98^+7N<e"}
+  ] 
+};
+*/
+/*
+$(document).ready(function() {
+  $.get("https://service.xirsys.com/ice",
+      {
+          ident: "something",
+          secret: "61986108-7b2f-11e6-b4ee-28ee1984c12b",
+          domain: "peaceful-journey-94586.herokuapp.com",
+          application: "tadtest",
+          room: "default",
+          secure: 1
+      },
+      function(data, status) {
+          alert("Data: " + data + "nnStatus: " + status);
+          console.log(data);
+          console.log(status);
+          console.log("Data: " + data + "nnStatus: " + status);
+      }
+      );
+  });
+*/

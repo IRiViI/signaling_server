@@ -62,10 +62,57 @@ var localStream;
 var localVideo = document.getElementById('localVideo');
 var remoteVideo = document.getElementById('remoteVideo');
 
+/*
 var servers = { 
   "iceServers": [
     {url:'stun:stun.l.google.com:19302'},
-    {url: 'turn:numb.viagenie.ca', username:"rckvink@gmail.com", credential:"[80S37b98^+7N<e"}
+    {url:'turn:numb.viagenie.ca', username:"rckvink@gmail.com", credential:"[80S37b98^+7N<e"}
+  ] 
+};
+*/
+
+$(document).ready(function() {
+  $.get("https://service.xirsys.com/ice",
+      {
+          ident: "something",
+          secret: "61986108-7b2f-11e6-b4ee-28ee1984c12b",
+          domain: "peaceful-journey-94586.herokuapp.com",
+          application: "tadtest",
+          room: "default",
+          secure: 1
+      },
+      function(data, status) {
+          alert("Data: " + data + "nnStatus: " + status);
+          console.log(data);
+          console.log(status);
+          console.log("Data: " + data + "nnStatus: " + status);
+      }
+      );
+  });
+
+var servers = { 
+  "iceServers": [
+    {"url":"stun:turn01.uswest.xirsys.com"},
+    {
+      "username":"12756aa0-7b32-11e6-b7c5-86b8896063c3",
+      "url":"turn:turn01.uswest.xirsys.com:443?transport=udp",
+      "credential":"12756b36-7b32-11e6-b6d3-4d239dc95dce"
+    },
+    {
+      "username":"12756aa0-7b32-11e6-b7c5-86b8896063c3",
+      "url":"turn:turn01.uswest.xirsys.com:443?transport=tcp",
+      "credential":"12756b36-7b32-11e6-b6d3-4d239dc95dce"
+    },
+    {
+      "username":"12756aa0-7b32-11e6-b7c5-86b8896063c3",
+      "url":"turn:turn01.uswest.xirsys.com:5349?transport=udp",
+      "credential":"12756b36-7b32-11e6-b6d3-4d239dc95dce"
+    },
+    {
+      "username":"12756aa0-7b32-11e6-b7c5-86b8896063c3",
+      "url":"turn:turn01.uswest.xirsys.com:5349?transport=tcp",
+      "credential":"12756b36-7b32-11e6-b6d3-4d239dc95dce"
+    }
   ] 
 };
 

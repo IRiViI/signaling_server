@@ -28,11 +28,17 @@ function createWS(room_id,client_id,
     var data = JSON.parse(message.data);
     // If request description
     if  (data.requestDescription != null){
-      onReceiveRequestDescription(data.requestDescription);
+      var description = new RTCSessionDescription();
+      description.type = data.requestDescription.type;
+      description.sdp  = data.requestDescription.sdp;
+      onReceiveRequestDescription(description);
     } 
     // If answer description
     else if (data.answerDescription != null){
-      onReceiveAnswerDescription(data.answerDescription);
+      var description = new RTCSessionDescription();
+      description.type = data.answerDescription.type;
+      description.sdp  = data.answerDescription.sdp;
+      onReceiveAnswerDescription(description);
     }
     // If candidate
     else if (data.candidate != null){

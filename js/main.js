@@ -83,6 +83,10 @@ startWebRTC = function(){
   window.pc = pc = new window.RTCPeerConnection(servers);
   pc.onicecandidate = function(event){
     if (event.candidate != null){
+      if (!event || !event.candidate) {
+        console.log("incorrected candidate")
+        return;
+      }
       ws.sendMessage({candidate:event.candidate},to_client_id_text.value);
       console.log("onicecandidate");
     };

@@ -49,7 +49,6 @@ function createWS(room_id,client_id,
   *
   */
   ws.sendMessage = function(data,to){
-    console.log(SETTINGS);
     // Label data
     data.room_id = SETTINGS.room_id;
     data.from_client_id = SETTINGS.client_id;
@@ -57,6 +56,7 @@ function createWS(room_id,client_id,
     // Send message to server
     ws.send(JSON.stringify(data));
     console.log("Info: sendMessage, Message send");
+    console.log(data);
   }
 
   return ws;

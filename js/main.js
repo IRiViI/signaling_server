@@ -129,7 +129,7 @@ sendWebRTCRequest = function(){
     desc3.type = desc2.type;
     desc3.sdp  = desc2.sdp;
     console.log(desc3);
-    pc.setLocalDescription(desc2,
+    pc.setLocalDescription(desc3,
         setLocalSuccesful,
         setLocalFailure);
     console.log("offerSuccesful");

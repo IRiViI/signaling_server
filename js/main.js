@@ -143,6 +143,7 @@ processRequestDescription = function(requestDescription){
     console.log("onSetRemoteFailure");
     console.log(error);
   }
+  console.log(requestDescription);
   pc.setRemoteDescription(
     requestDescription,
     onSetRemoteSuccesful,

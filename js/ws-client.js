@@ -42,7 +42,11 @@ function createWS(room_id,client_id,
     }
     // If candidate
     else if (data.candidate != null){
-      onReceiveCandidate(data.candidate);
+      var candidate = new RTCIceCandidate({
+        sdpMLineIndex: data.candidate.sdpMLineIndex,
+        candidate: data.candidate.candidate
+      });
+      onReceiveCandidate(candidate);
     }
     // Else
     else {

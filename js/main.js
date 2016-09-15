@@ -191,7 +191,7 @@ processReceiveCandidate = function(candidate){
     console.log(error);
   }
   pc.addIceCandidate(
-    new RTCIceCandidate(candidate),
+    candidate,
     onIceSuccesful,
     onIceFailure);
   console.log("addIceCandidate");

@@ -154,10 +154,12 @@ processRequestDescription = function(requestDescription){
 
   continueRequest = function (){
     function anwerSuccesful(answerDescription){
+      console.log("anwerSuccesful");
       ws.sendMessage({answerDescription:answerDescription},to_client_id_text.value);
       pc.setLocalDescription(answerDescription);
     }
     function answerFailure(error){
+      console.log("answerFailure");
       console.log(error);
     }
     pc.createAnswer(anwerSuccesful,answerFailure)

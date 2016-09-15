@@ -124,7 +124,10 @@ startWebRTC = function(){
 sendWebRTCRequest = function(){
   function offerSuccesful(desc){
     ws.sendMessage({requestDescription:desc},to_client_id_text.value);
-    pc.setLocalDescription(desc);
+    window.setTimeout(
+      pc.setLocalDescription(desc)
+      , 1000);
+    
     console.log("offerSuccesful");
   }
   function offerFailure(error){
@@ -148,7 +151,7 @@ processRequestDescription = function(requestDescription){
   }
   console.log(requestDescription);
   pc.setRemoteDescription(
-    requestDescription.sdp,
+    requestDescription,
     onSetRemoteSuccesful,
     onSetRemoteFailure);
 

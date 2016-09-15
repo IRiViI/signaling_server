@@ -125,7 +125,10 @@ sendWebRTCRequest = function(){
   function offerSuccesful(desc){
     ws.sendMessage({requestDescription:desc},to_client_id_text.value);
     var desc2 = JSON.parse(JSON.stringify(desc));
-    console.log(desc2);
+    var desc3 = new RTCSessionDescription();
+    desc3.type = desc2.type;
+    desc3.sdp  = desc2.sdp;
+    console.log(desc3);
     pc.setLocalDescription(desc2,
         setLocalSuccesful,
         setLocalFailure);

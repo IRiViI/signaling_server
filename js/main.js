@@ -148,7 +148,7 @@ processRequestDescription = function(requestDescription){
   }
   console.log(requestDescription);
   pc.setRemoteDescription(
-    requestDescription,
+    requestDescription.sdp,
     onSetRemoteSuccesful,
     onSetRemoteFailure);
 

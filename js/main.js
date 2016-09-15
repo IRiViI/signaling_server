@@ -111,6 +111,21 @@ $(document).ready(function() {
       }
       );
   });
+
+
+var configuration = {
+    audio: false,
+    video: true
+  };
+
+var offerOptions = {
+  offerToReceiveAudio: 1,
+  offerToReceiveVideo: 1
+};
+
+startWebRTC = function(){
+
+
 var servers = { 
   "iceServers": [
     {url:"stun:turn01.uswest.xirsys.com"},
@@ -143,18 +158,8 @@ var servers = {
 
   ] 
 };
+console.log(servers);
 
-var configuration = {
-    audio: false,
-    video: true
-  };
-
-var offerOptions = {
-  offerToReceiveAudio: 1,
-  offerToReceiveVideo: 1
-};
-
-startWebRTC = function(){
   window.pc = pc = new window.RTCPeerConnection(servers);
   pc.onicecandidate = function(event){
     if (event.candidate != null){

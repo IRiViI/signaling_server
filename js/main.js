@@ -129,7 +129,7 @@ sendWebRTCRequest = function(){
   }
   pc.createOffer(
     offerSuccesful,
-    fferFailure,
+    offerFailure,
     offerOptions);
   console.log("sendWebRTCRequest");
 }

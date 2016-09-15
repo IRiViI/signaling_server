@@ -126,7 +126,9 @@ sendWebRTCRequest = function(){
     ws.sendMessage({requestDescription:desc},to_client_id_text.value);
     var desc2 = JSON.parse(JSON.stringify(desc));
     console.log(desc2);
-    pc.setLocalDescription(desc2);
+    pc.setLocalDescription(desc2,
+        setLocalSuccesful,
+        setLocalFailure);
     console.log("offerSuccesful");
   }
   function offerFailure(error){
@@ -144,10 +146,6 @@ processRequestDescription = function(requestDescription){
   function onSetRemoteSuccesful(event){
     continueRequest();
   }
-  function onSetRemoteFailure(event){
-    console.log("onSetRemoteFailure");
-    console.log(error);
-  }
   console.log(requestDescription);
   pc.setRemoteDescription(
     requestDescription,
@@ -158,7 +156,10 @@ processRequestDescription = function(requestDescription){
     function anwerSuccesful(answerDescription){
       console.log("anwerSuccesful");
       ws.sendMessage({answerDescription:answerDescription},to_client_id_text.value);
-      pc.setLocalDescription(answerDescription);
+      pc.setLocalDescription(
+        answerDescription,
+        setLocalSuccesful,
+        setLocalFailure);
     }
     function answerFailure(error){
       console.log("answerFailure");
@@ -173,10 +174,6 @@ processAnswerDescription = function(answerDescription){
   function onSetRemoteSuccesful(event){
     console.log("onSetRemoteSuccesful");
     console.log(event);
-  }
-  function onSetRemoteFailure(error){
-    console.log("onSetRemoteFailure");
-    console.log(error);
   }
   pc.setRemoteDescription(
     answerDescription,
@@ -203,6 +200,19 @@ processReceiveCandidate = function(candidate){
   console.log(candidate);
 }
 
+
+function setLocalSuccesful(event){
+  console.log("setLocalSuccesful:");
+  console.log(event);
+}
+function setLocalFailure(error){
+  console.log("setLocalFailure:");
+  consoel.log(error);
+}
+function onSetRemoteFailure(error){
+  console.log("onSetRemoteFailure");
+  console.log(error);
+}
 
 /*
 

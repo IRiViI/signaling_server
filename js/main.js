@@ -70,7 +70,7 @@ var servers = {
   ] 
 };
 */
-
+/*
 $(document).ready(function() {
   $.get("https://service.xirsys.com/ice",
       {
@@ -89,6 +89,7 @@ $(document).ready(function() {
       }
       );
   });
+*/
 
 var servers = { 
   "iceServers": [

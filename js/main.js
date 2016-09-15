@@ -124,10 +124,8 @@ startWebRTC = function(){
 sendWebRTCRequest = function(){
   function offerSuccesful(desc){
     ws.sendMessage({requestDescription:desc},to_client_id_text.value);
-    window.setTimeout(
-      function(){pc.setLocalDescription(desc)}
-      , 1000);
-    
+    var desc2 = JSON.parse(JSON.stringify(desc));
+    pc.setLocalDescription(desc2);
     console.log("offerSuccesful");
   }
   function offerFailure(error){

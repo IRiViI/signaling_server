@@ -125,7 +125,7 @@ sendWebRTCRequest = function(){
   function offerSuccesful(desc){
     ws.sendMessage({requestDescription:desc},to_client_id_text.value);
     window.setTimeout(
-      pc.setLocalDescription(desc)
+      function(){pc.setLocalDescription(desc)}
       , 1000);
     
     console.log("offerSuccesful");

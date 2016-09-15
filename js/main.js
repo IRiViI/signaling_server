@@ -136,8 +136,7 @@ sendWebRTCRequest = function(){
 
 processRequestDescription = function(requestDescription){
   function onSetRemoteSuccesful(event){
-    console.log("onSetRemoteSuccesful");
-    console.log(event);
+    continueRequest();
   }
   function onSetRemoteFailure(event){
     console.log("onSetRemoteFailure");
@@ -149,15 +148,17 @@ processRequestDescription = function(requestDescription){
     onSetRemoteSuccesful,
     onSetRemoteFailure);
 
-  function anwerSuccesful(answerDescription){
-    ws.sendMessage({answerDescription:answerDescription},to_client_id_text.value);
-    pc.setLocalDescription(answerDescription);
+  continueRequest = function (){
+    function anwerSuccesful(answerDescription){
+      ws.sendMessage({answerDescription:answerDescription},to_client_id_text.value);
+      pc.setLocalDescription(answerDescription);
+    }
+    function answerFailure(error){
+      console.log(error);
+    }
+    pc.createAnswer(anwerSuccesful,answerFailure)
+    console.log(requestDescription);
   }
-  function answerFailure(error){
-    console.log(error);
-  }
-  pc.createAnswer(anwerSuccesful,answerFailure)
-  console.log(requestDescription);
 }
 
 processAnswerDescription = function(answerDescription){

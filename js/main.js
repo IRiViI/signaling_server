@@ -19,8 +19,8 @@ function start(){
 
 function call(){
   to_drone_id = to_client_id_text.value;
-  startWebRTC();
-  sendWebRTCRequest();
+  startWebRTC(callback);
+  function callback(){sendWebRTCRequest()};
   //ws.sendMessage({requestDescription:"hello"},to_client_id_text.value);
 }
 
@@ -42,8 +42,9 @@ onReceiveRequestDescription = function (from_client_id,requestDescription){
   //console.log("rDesc");
   console.log(from_client_id);
   to_drone_id = from_client_id;
-  startWebRTC();
-  processRequestDescription(requestDescription);
+  startWebRTC(callback);
+  function callback(){processRequestDescription(requestDescription)};
+  
 }
 
 onReceiveAnswerDescription = function (answerDescription){
@@ -101,7 +102,7 @@ var offerOptions = {
   offerToReceiveVideo: 1
 };
 
-startWebRTC = function(){
+startWebRTC = function(onStartWebRTCSuccesful){
 
 
 var servers = { 
@@ -187,6 +188,7 @@ var servers = {
       var pc = pc_list[0];
     }
     pc.onaddstream = gotRemoteStream;
+    onStartWebRTCSuccesful();
   }
   function getUserMediaFailure(error){
     //console.log("getUserMediaFail:");

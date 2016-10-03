@@ -57,10 +57,14 @@ onOpenWs = function(){
 
 // WebRTC 
 
-var pc;
 var localStream;
 var localVideo = document.getElementById('localVideo');
 var remoteVideo = document.getElementById('remoteVideo');
+
+
+var pc;
+
+function tests(){
 
 var xirsys_data;
 
@@ -75,12 +79,11 @@ $(document).ready(function() {
           secure: 1
       },
       function(data, status) {
-          alert("Data: " + data + "nnStatus: " + status);
+          xirsys_data = data;
           //console.log(data);
           //console.log(status);
           //console.log("Data: " + data + "nnStatus: " + status);
 
-          xirsys_data = data;
       }
       );
   });
@@ -146,11 +149,13 @@ var servers = {
   }
   pc.oniceconnectionstatechange = function(event) {
     // console.dir(event);
+    /*
     if (pc.iceconnectionstate === "failed" ||
         pc.iceconnectionstate === "disconnected" ||
         pc.iceconnectionstate === "closed") {
       //console.log(event);
     };
+    */
     //console.log("oniceconnectionstatechange");
   }
 
@@ -159,6 +164,7 @@ var servers = {
     window.localStream = localStream = stream;
     pc.addStream(localStream);
     function gotRemoteStream(event){
+      console.log("Tests")
       window.remoteStream = remoteVideo.srcObject = event.stream;
       //console.log("gotRemoteStream");
     }
@@ -264,7 +270,8 @@ function onSetRemoteFailure(error){
   //console.log("onSetRemoteFailure");
   //console.log(error);
 }
-
+ 
+}
 /*
 
 

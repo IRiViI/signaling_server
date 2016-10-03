@@ -27,9 +27,6 @@ function startEverything(){
   var to_client_id_text = document.getElementById('to_client_id');
   var room_id_text = document.getElementById('room_id');
 
-  startSignalingServer();
-  sendWebRTCRequest();
-
 // Signaling server
 
 startSignalingServer = function(){
@@ -270,6 +267,9 @@ function onSetRemoteFailure(error){
   //console.log("onSetRemoteFailure");
   //console.log(error);
 }
+
+  startSignalingServer();
+  sendWebRTCRequest();
 
 /*
 

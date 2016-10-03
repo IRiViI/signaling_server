@@ -378,7 +378,7 @@ $(document).ready(function() {
 */
 
 function getPc(to_drone_id){
-  var t_pc = pc_lis.length;
+  var t_pc = pc_list.length;
   for(var i_pc = 0; i_pc < t_pc; i_pc++){
     pc = pc_list[i_pc];
     if (pc.drone_id==to_drone_id){

@@ -6,13 +6,9 @@ start_button.onclick = start;
 call_button.onclick = call;
 hangup_button.onclick = hangup;
 
-var from_client_id_text = document.getElementById('from_client_id');
-var to_client_id_text = document.getElementById('to_client_id');
-var room_id_text = document.getElementById('room_id');
-
-var ws;
 
 function start(){
+  startEverything();
 }
 
 function call(){
@@ -24,6 +20,13 @@ function hangup(){
 }
 
 function startEverything(){
+
+  var ws;
+
+  var from_client_id_text = document.getElementById('from_client_id');
+  var to_client_id_text = document.getElementById('to_client_id');
+  var room_id_text = document.getElementById('room_id');
+
   startSignalingServer();
   sendWebRTCRequest();
 

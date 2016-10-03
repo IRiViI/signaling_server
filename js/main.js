@@ -37,6 +37,7 @@ startSignalingServer = function(){
 
 onReceiveRequestDescription = function (from_client_id,requestDescription){
   //console.log("rDesc");
+  console.log(from_client_id);
   to_drone_id = from_client_id;
   processRequestDescription(requestDescription);
 }

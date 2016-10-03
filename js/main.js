@@ -19,6 +19,7 @@ function start(){
 
 function call(){
   to_drone_id = to_client_id_text.value;
+  startWebRTC();
   sendWebRTCRequest();
   //ws.sendMessage({requestDescription:"hello"},to_client_id_text.value);
 }
@@ -41,6 +42,7 @@ onReceiveRequestDescription = function (from_client_id,requestDescription){
   //console.log("rDesc");
   console.log(from_client_id);
   to_drone_id = from_client_id;
+  startWebRTC();
   processRequestDescription(requestDescription);
 }
 
@@ -56,7 +58,7 @@ onReceiveCandidate = function (candidate){
 
 onOpenWs = function(){
   //console.log("ws");
-  startWebRTC();
+  
 }
 
 // WebRTC 
@@ -380,7 +382,7 @@ $(document).ready(function() {
 function getPc(to_drone_id){
   var t_pc = pc_list.length;
   for(var i_pc = 0; i_pc < t_pc; i_pc++){
-    pc = pc_list[i_pc];
+    var pc = pc_list[i_pc];
     if (pc.drone_id==to_drone_id){
       return pc;
     } 

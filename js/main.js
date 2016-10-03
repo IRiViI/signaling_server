@@ -269,7 +269,8 @@ function onSetRemoteFailure(error){
 }
 
   startSignalingServer();
-  sendWebRTCRequest();
+  window.setTimeout(sendWebRTCRequest,2000);
+  
 
 /*
 

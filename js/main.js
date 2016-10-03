@@ -13,7 +13,6 @@ var room_id_text = document.getElementById('room_id');
 var ws;
 
 function start(){
-  tests();
 }
 
 function call(){
@@ -23,6 +22,10 @@ function call(){
 function hangup(){
 	
 }
+
+function startEverything(){
+  startSignalingServer();
+  sendWebRTCRequest();
 
 // Signaling server
 
@@ -56,14 +59,10 @@ onOpenWs = function(){
 
 // WebRTC 
 
+var pc;
 var localStream;
 var localVideo = document.getElementById('localVideo');
 var remoteVideo = document.getElementById('remoteVideo');
-
-
-var pc;
-
-function tests(){
 
 var xirsys_data;
 
@@ -163,7 +162,6 @@ var servers = {
     window.localStream = localStream = stream;
     pc.addStream(localStream);
     function gotRemoteStream(event){
-      console.log("Tests")
       window.remoteStream = remoteVideo.srcObject = event.stream;
       //console.log("gotRemoteStream");
     }
@@ -270,10 +268,6 @@ function onSetRemoteFailure(error){
   //console.log(error);
 }
 
-  startSignalingServer();
-  sendWebRTCRequest();
- 
-}
 /*
 
 
@@ -327,3 +321,4 @@ $(document).ready(function() {
       );
   });
 */
+}

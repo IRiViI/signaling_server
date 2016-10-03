@@ -6,48 +6,24 @@ start_button.onclick = start;
 call_button.onclick = call;
 hangup_button.onclick = hangup;
 
+var from_client_id_text = document.getElementById('from_client_id');
+var to_client_id_text = document.getElementById('to_client_id');
+var room_id_text = document.getElementById('room_id');
+
+var ws;
 
 function start(){
-  startEverything();
+  startSignalingServer();
 }
 
 function call(){
+  sendWebRTCRequest();
   //ws.sendMessage({requestDescription:"hello"},to_client_id_text.value);
 }
 
 function hangup(){
 	
 }
-
-var xirsys_data;
-
-$(document).ready(function() {
-  $.get("https://service.xirsys.com/ice",
-      {
-          ident: "something",
-          secret: "61986108-7b2f-11e6-b4ee-28ee1984c12b",
-          domain: "peaceful-journey-94586.herokuapp.com",
-          application: "tadtest",
-          room: "default",
-          secure: 1
-      },
-      function(data, status) {
-          xirsys_data = data;
-          //console.log(data);
-          //console.log(status);
-          //console.log("Data: " + data + "nnStatus: " + status);
-
-      }
-      );
-  });
-
-function startEverything(){
-
-  var ws;
-
-  var from_client_id_text = document.getElementById('from_client_id');
-  var to_client_id_text = document.getElementById('to_client_id');
-  var room_id_text = document.getElementById('room_id');
 
 // Signaling server
 
@@ -85,6 +61,28 @@ var pc;
 var localStream;
 var localVideo = document.getElementById('localVideo');
 var remoteVideo = document.getElementById('remoteVideo');
+
+var xirsys_data;
+
+$(document).ready(function() {
+  $.get("https://service.xirsys.com/ice",
+      {
+          ident: "something",
+          secret: "61986108-7b2f-11e6-b4ee-28ee1984c12b",
+          domain: "peaceful-journey-94586.herokuapp.com",
+          application: "tadtest",
+          room: "default",
+          secure: 1
+      },
+      function(data, status) {
+          xirsys_data = data;
+          //console.log(data);
+          //console.log(status);
+          //console.log("Data: " + data + "nnStatus: " + status);
+
+      }
+      );
+  });
 
 
 var configuration = {
@@ -268,10 +266,6 @@ function onSetRemoteFailure(error){
   //console.log(error);
 }
 
-  startSignalingServer();
-  window.setTimeout(sendWebRTCRequest,2000);
-  
-
 /*
 
 
@@ -325,4 +319,3 @@ $(document).ready(function() {
       );
   });
 */
-}

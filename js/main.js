@@ -13,11 +13,10 @@ var room_id_text = document.getElementById('room_id');
 var ws;
 
 function start(){
-  startSignalingServer();
+  tests();
 }
 
 function call(){
-  sendWebRTCRequest();
   //ws.sendMessage({requestDescription:"hello"},to_client_id_text.value);
 }
 
@@ -270,6 +269,9 @@ function onSetRemoteFailure(error){
   //console.log("onSetRemoteFailure");
   //console.log(error);
 }
+
+  startSignalingServer();
+  sendWebRTCRequest();
  
 }
 /*

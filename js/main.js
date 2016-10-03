@@ -9,7 +9,7 @@ hangup_button.onclick = hangup;
 var from_client_id_text = document.getElementById('from_client_id');
 var to_client_id_text = document.getElementById('to_client_id');
 var room_id_text = document.getElementById('room_id');
-
+var to_drone_id;
 var ws;
 
 function start(){
@@ -22,7 +22,7 @@ function call(){
 }
 
 function hangup(){
-	
+  to_drone_id = to_client_id_text.value;
 }
 
 // Signaling server
@@ -207,7 +207,7 @@ processRequestDescription = function(requestDescription){
   continueRequest = function (){
     function anwerSuccesful(answerDescription){
       //console.log("anwerSuccesful");
-      ws.sendMessage({answerDescription:answerDescription},to_client_id_text.value);
+      ws.sendMessage({answerDescription:answerDescription},to_drone_id);
       pc.setLocalDescription(
         answerDescription,
         setLocalSuccesful,

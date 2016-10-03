@@ -17,12 +17,12 @@ function start(){
 }
 
 function call(){
+  to_drone_id = to_client_id_text.value;
   sendWebRTCRequest();
   //ws.sendMessage({requestDescription:"hello"},to_client_id_text.value);
 }
 
 function hangup(){
-  to_drone_id = to_client_id_text.value;
 }
 
 // Signaling server
@@ -37,7 +37,7 @@ startSignalingServer = function(){
 
 onReceiveRequestDescription = function (from_client_id,requestDescription){
   //console.log("rDesc");
-  to_client_id_text = from_client_id;
+  to_drone_id = from_client_id;
   processRequestDescription(requestDescription);
 }
 
@@ -140,7 +140,7 @@ var servers = {
         console.log("incorrected candidate")
         return;
       }
-      ws.sendMessage({candidate:event.candidate},to_client_id_text.value);
+      ws.sendMessage({candidate:event.candidate},to_drone_id);
       //console.log("onicecandidate");
     };
   }
@@ -178,7 +178,7 @@ var servers = {
 
 sendWebRTCRequest = function(){
   function offerSuccesful(desc){
-    ws.sendMessage({requestDescription:desc},to_client_id_text.value);
+    ws.sendMessage({requestDescription:desc},to_drone_id);
     pc.setLocalDescription(desc,
         setLocalSuccesful,
         setLocalFailure);

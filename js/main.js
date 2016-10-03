@@ -35,8 +35,9 @@ startSignalingServer = function(){
   onOpenWs);
 }
 
-onReceiveRequestDescription = function (requestDescription){
+onReceiveRequestDescription = function (from_client_id,requestDescription){
   //console.log("rDesc");
+  to_client_id_text = from_client_id;
   processRequestDescription(requestDescription);
 }
 
@@ -199,6 +200,8 @@ processRequestDescription = function(requestDescription){
     continueRequest();
   }
   //console.log(requestDescription);
+
+
   pc.setRemoteDescription(
     requestDescription,
     onSetRemoteSuccesful,

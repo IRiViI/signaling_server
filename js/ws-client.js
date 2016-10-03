@@ -31,7 +31,7 @@ function createWS(room_id,client_id,
       var description = new RTCSessionDescription();
       description.type = data.requestDescription.type;
       description.sdp  = data.requestDescription.sdp;
-      onReceiveRequestDescription(description);
+      onReceiveRequestDescription(data.from_client_id,description);
     } 
     // If answer description
     else if (data.answerDescription != null){

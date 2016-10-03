@@ -138,7 +138,8 @@ var servers = {
 
   var pc = new window.RTCPeerConnection(servers);
   if (my_drone_id==42){
-    pc_list[to_drone_id] = pc;
+    pc_list.push(pc);
+    pc.drone_id = to_drone_id;
   } else {
     pc_list[0] = pc;
   }
@@ -169,7 +170,7 @@ var servers = {
     localVideo.srcObject = stream;
     window.localStream = localStream = stream;
     if (my_drone_id==42){
-      var pc = pc_list[to_drone_id];
+      var pc = getPc(to_drone_id);
     } else {
       var pc = pc_list[0];
     }
@@ -179,7 +180,7 @@ var servers = {
       //console.log("gotRemoteStream");
     }
     if (my_drone_id==42){
-      var pc = pc_list[to_drone_id];
+      var pc = getPc(to_drone_id);
     } else {
       var pc = pc_list[0];
     }
@@ -199,7 +200,7 @@ sendWebRTCRequest = function(){
   function offerSuccesful(desc){
     ws.sendMessage({requestDescription:desc},to_drone_id);
     if (my_drone_id==42){
-      var pc = pc_list[to_drone_id];
+      var pc = getPc(to_drone_id);
     } else {
       var pc = pc_list[0];
     }
@@ -213,7 +214,7 @@ sendWebRTCRequest = function(){
     //console.log(error);
   }
   if (my_drone_id==42){
-    var pc = pc_list[to_drone_id];
+    var pc = getPc(to_drone_id);
   } else {
     var pc = pc_list[0];
   }
@@ -231,7 +232,7 @@ processRequestDescription = function(requestDescription){
   //console.log(requestDescription);
 
   if (my_drone_id==42){
-    var pc = pc_list[to_drone_id];
+    var pc = getPc(to_drone_id);
   } else {
     var pc = pc_list[0];
   }
@@ -245,7 +246,7 @@ processRequestDescription = function(requestDescription){
       //console.log("anwerSuccesful");
       ws.sendMessage({answerDescription:answerDescription},to_drone_id);
       if (my_drone_id==42){
-        var pc = pc_list[to_drone_id];
+        var pc = getPc(to_drone_id);
       } else {
         var pc = pc_list[0];
       }
@@ -259,7 +260,7 @@ processRequestDescription = function(requestDescription){
       //console.log(error);
     }
     if (my_drone_id==42){
-      var pc = pc_list[to_drone_id];
+      var pc = getPc(to_drone_id);
     } else {
       var pc = pc_list[0];
     }
@@ -274,7 +275,7 @@ processAnswerDescription = function(answerDescription){
     //console.log(event);
   }
   if (my_drone_id==42){
-    var pc = pc_list[to_drone_id];
+    var pc = getPc(to_drone_id);
   } else {
     var pc = pc_list[0];
   }
@@ -296,7 +297,7 @@ processReceiveCandidate = function(candidate){
     //console.log(error);
   }
   if (my_drone_id==42){
-    var pc = pc_list[to_drone_id];
+    var pc = getPc(to_drone_id);
   } else {
     var pc = pc_list[0];
   }
@@ -375,3 +376,15 @@ $(document).ready(function() {
       );
   });
 */
+
+function getPc(to_drone_id){
+  var t_pc = pc_lis.length;
+  for(var i_pc = 0; i_pc < t_pc; i_pc++){
+    pc = pc_list[i_pc];
+    if (pc.drone_id==to_drone_id){
+      return pc;
+    } 
+  }
+  console.log("pc doesn't exist")
+  return null
+}

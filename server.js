@@ -97,6 +97,7 @@ function checkFromClient(ws,room_id,client_from_id){
         return true;
       } else {
         // If information incorrect
+        console.log(client);
         console.log("WARNING: checkRequest, Someone is not the person he says he is");
       }
     } else {

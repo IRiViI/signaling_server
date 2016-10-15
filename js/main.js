@@ -100,6 +100,7 @@ var offerOptions = {
   offerToReceiveVideo: 1
 };
 
+
 startWebRTC = function(){
 
 

@@ -87,7 +87,12 @@ $(document).ready(function() {
 
 var configuration = {
     audio: false,
-    video: true
+    video: true,
+    mandatory: {
+        chromeMediaSource: 'screen',
+        maxWidth: 1280,
+        maxHeight: 720
+    }
   };
 
 var offerOptions = {

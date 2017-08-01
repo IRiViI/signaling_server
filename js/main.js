@@ -9,8 +9,7 @@ hangup_button.onclick = hangup;
 var from_client_id_text = document.getElementById('from_client_id');
 var to_client_id_text = document.getElementById('to_client_id');
 var room_id_text = document.getElementById('room_id');
-var to_drone_id;
-var my_drone_id;
+
 var ws;
 
 function start(){
@@ -18,33 +17,27 @@ function start(){
 }
 
 function call(){
-  to_drone_id = to_client_id_text.value;
-  startWebRTC(callback);
-  function callback(){sendWebRTCRequest()};
+  sendWebRTCRequest();
   //ws.sendMessage({requestDescription:"hello"},to_client_id_text.value);
 }
 
 function hangup(){
+	
 }
 
 // Signaling server
 
 startSignalingServer = function(){
-  my_drone_id = from_client_id_text.value
-  ws = createWS(room_id_text.value,my_drone_id,
+  ws = createWS(room_id_text.value,from_client_id_text.value,
   onReceiveRequestDescription,
   onReceiveAnswerDescription,
   onReceiveCandidate,
   onOpenWs);
 }
 
-onReceiveRequestDescription = function (from_client_id,requestDescription){
+onReceiveRequestDescription = function (requestDescription){
   //console.log("rDesc");
-  console.log(from_client_id);
-  to_drone_id = from_client_id;
-  startWebRTC(callback);
-  function callback(){processRequestDescription(requestDescription)};
-  
+  processRequestDescription(requestDescription);
 }
 
 onReceiveAnswerDescription = function (answerDescription){
@@ -59,12 +52,12 @@ onReceiveCandidate = function (candidate){
 
 onOpenWs = function(){
   //console.log("ws");
-  
+  startWebRTC();
 }
 
 // WebRTC 
 
-var pc_list = [];
+var pc;
 var localStream;
 var localVideo = document.getElementById('localVideo');
 var remoteVideo = document.getElementById('remoteVideo');
@@ -94,7 +87,12 @@ $(document).ready(function() {
 
 var configuration = {
     audio: false,
-    video: true
+    video: true,
+    mandatory: {
+        chromeMediaSource: 'screen',
+        maxWidth: 1280,
+        maxHeight: 720
+    }
   };
 
 var offerOptions = {
@@ -102,7 +100,8 @@ var offerOptions = {
   offerToReceiveVideo: 1
 };
 
-startWebRTC = function(onStartWebRTCSuccesful){
+
+startWebRTC = function(){
 
 
 var servers = { 
@@ -139,21 +138,14 @@ var servers = {
 };
 //console.log(servers);
 
-  var pc = new window.RTCPeerConnection(servers);
-  if (my_drone_id==42){
-    pc_list.push(pc);
-    pc.drone_id = to_drone_id;
-  } else {
-    pc_list[0] = pc;
-  }
-
+  window.pc = pc = new window.RTCPeerConnection(servers);
   pc.onicecandidate = function(event){
     if (event.candidate != null){
       if (!event || !event.candidate) {
         console.log("incorrected candidate")
         return;
       }
-      ws.sendMessage({candidate:event.candidate},to_drone_id);
+      ws.sendMessage({candidate:event.candidate},to_client_id_text.value);
       //console.log("onicecandidate");
     };
   }
@@ -172,23 +164,12 @@ var servers = {
   function getUserMediaSuccess(stream){
     localVideo.srcObject = stream;
     window.localStream = localStream = stream;
-    if (my_drone_id==42){
-      var pc = getPc(to_drone_id);
-    } else {
-      var pc = pc_list[0];
-    }
     pc.addStream(localStream);
     function gotRemoteStream(event){
       window.remoteStream = remoteVideo.srcObject = event.stream;
       //console.log("gotRemoteStream");
     }
-    if (my_drone_id==42){
-      var pc = getPc(to_drone_id);
-    } else {
-      var pc = pc_list[0];
-    }
     pc.onaddstream = gotRemoteStream;
-    onStartWebRTCSuccesful();
   }
   function getUserMediaFailure(error){
     //console.log("getUserMediaFail:");
@@ -202,12 +183,7 @@ var servers = {
 
 sendWebRTCRequest = function(){
   function offerSuccesful(desc){
-    ws.sendMessage({requestDescription:desc},to_drone_id);
-    if (my_drone_id==42){
-      var pc = getPc(to_drone_id);
-    } else {
-      var pc = pc_list[0];
-    }
+    ws.sendMessage({requestDescription:desc},to_client_id_text.value);
     pc.setLocalDescription(desc,
         setLocalSuccesful,
         setLocalFailure);
@@ -216,11 +192,6 @@ sendWebRTCRequest = function(){
   function offerFailure(error){
     //console.log("offerFailure:");
     //console.log(error);
-  }
-  if (my_drone_id==42){
-    var pc = getPc(to_drone_id);
-  } else {
-    var pc = pc_list[0];
   }
   pc.createOffer(
     offerSuccesful,
@@ -234,12 +205,6 @@ processRequestDescription = function(requestDescription){
     continueRequest();
   }
   //console.log(requestDescription);
-
-  if (my_drone_id==42){
-    var pc = getPc(to_drone_id);
-  } else {
-    var pc = pc_list[0];
-  }
   pc.setRemoteDescription(
     requestDescription,
     onSetRemoteSuccesful,
@@ -248,12 +213,7 @@ processRequestDescription = function(requestDescription){
   continueRequest = function (){
     function anwerSuccesful(answerDescription){
       //console.log("anwerSuccesful");
-      ws.sendMessage({answerDescription:answerDescription},to_drone_id);
-      if (my_drone_id==42){
-        var pc = getPc(to_drone_id);
-      } else {
-        var pc = pc_list[0];
-      }
+      ws.sendMessage({answerDescription:answerDescription},to_client_id_text.value);
       pc.setLocalDescription(
         answerDescription,
         setLocalSuccesful,
@@ -262,11 +222,6 @@ processRequestDescription = function(requestDescription){
     function answerFailure(error){
       //console.log("answerFailure");
       //console.log(error);
-    }
-    if (my_drone_id==42){
-      var pc = getPc(to_drone_id);
-    } else {
-      var pc = pc_list[0];
     }
     pc.createAnswer(anwerSuccesful,answerFailure)
     //console.log(requestDescription);
@@ -277,11 +232,6 @@ processAnswerDescription = function(answerDescription){
   function onSetRemoteSuccesful(event){
     //console.log("onSetRemoteSuccesful");
     //console.log(event);
-  }
-  if (my_drone_id==42){
-    var pc = getPc(to_drone_id);
-  } else {
-    var pc = pc_list[0];
   }
   pc.setRemoteDescription(
     answerDescription,
@@ -299,11 +249,6 @@ processReceiveCandidate = function(candidate){
   function onIceFailure(error){
     //console.log("onIceFailure");
     //console.log(error);
-  }
-  if (my_drone_id==42){
-    var pc = getPc(to_drone_id);
-  } else {
-    var pc = pc_list[0];
   }
   pc.addIceCandidate(
     candidate,
@@ -380,15 +325,3 @@ $(document).ready(function() {
       );
   });
 */
-
-function getPc(to_drone_id){
-  var t_pc = pc_list.length;
-  for(var i_pc = 0; i_pc < t_pc; i_pc++){
-    var pc = pc_list[i_pc];
-    if (pc.drone_id==to_drone_id){
-      return pc;
-    } 
-  }
-  console.log("pc doesn't exist")
-  return null
-}
